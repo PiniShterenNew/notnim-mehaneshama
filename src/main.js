@@ -2,7 +2,7 @@
 // DONATION URL CONFIGURATION
 // Update this single value to change all donation CTAs.
 // ═══════════════════════════════════════════════════
-const DONATION_URL = 'https://meshulam.co.il/quick_payment?b=d3ad476e504e90ec2b464f7536101942';
+const DONATION_URL = 'https://meshulam.co.il/quick_payment?b=2122728e4b3b887c70ff541c875938ea';
 
 // Inject DONATION_URL into every donate link
 document.querySelectorAll('.donate-link').forEach(el => {
