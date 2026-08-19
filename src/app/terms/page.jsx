@@ -1,6 +1,10 @@
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
-import { Link } from 'react-router-dom'
+import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
+import Link from 'next/link'
+
+export const metadata = {
+  title: 'תנאי שימוש — נותנים מהנשמה',
+}
 
 export default function TermsPage() {
   return (
@@ -33,7 +37,7 @@ export default function TermsPage() {
           </section>
           <section>
             <h2 className="text-xl font-headline font-bold text-on-surface mb-3">6. יצירת קשר</h2>
-            <p>לשאלות בנוגע לתנאי השימוש ניתן לפנות אלינו דרך <Link to="/contact" className="text-primary font-bold hover:underline">דף יצירת הקשר</Link>.</p>
+            <p>לשאלות בנוגע לתנאי השימוש ניתן לפנות אלינו דרך <Link href="/contact" className="text-primary font-bold hover:underline">דף יצירת הקשר</Link>.</p>
           </section>
         </div>
       </main>

@@ -1,6 +1,10 @@
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
-import { WHATSAPP_CONTACT } from '../config'
+import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
+import { WHATSAPP_CONTACT } from '../../config'
+
+export const metadata = {
+  title: 'צור קשר — נותנים מהנשמה',
+}
 
 export default function ContactPage() {
   return (

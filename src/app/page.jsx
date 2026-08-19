@@ -1,8 +1,11 @@
+'use client'
+
 import { useEffect, useRef } from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import { DONATION_URL, WHATSAPP_CONTACT, WHATSAPP_SHARE_URL } from '../config'
+import { WHATSAPP_CONTACT, buildWhatsappShareUrl } from '../config'
 import { useScrollReveal } from '../hooks/useScrollReveal'
+import { useFundraiser } from '../context/FundraiserContext'
 
 const WA_SVG_LG = (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -46,6 +49,8 @@ export default function HomePage() {
   useScrollReveal()
   const heroRef = useRef(null)
   const stickyRef = useRef(null)
+  const { donationUrl } = useFundraiser()
+  const whatsappShareUrl = buildWhatsappShareUrl(donationUrl)
 
   // Sticky mobile CTA
   useEffect(() => {
@@ -67,7 +72,7 @@ export default function HomePage() {
       {/* Sticky Mobile CTA */}
       <div ref={stickyRef} id="mobile-sticky" className="md:hidden" role="complementary" aria-label="תרומה מהירה">
         <span className="text-sm text-on-surface-variant font-medium">כל תרומה מכניסה אוכל לבית</span>
-        <a href={DONATION_URL} target="_blank" rel="noopener noreferrer" className="btn-primary-gradient px-6 py-2.5 text-sm whitespace-nowrap">לתרומה עכשיו</a>
+        <a href={donationUrl} target="_blank" rel="noopener noreferrer" className="btn-primary-gradient px-6 py-2.5 text-sm whitespace-nowrap">לתרומה עכשיו</a>
       </div>
 
       <Navbar />
@@ -89,7 +94,7 @@ export default function HomePage() {
               אתם אנשי אור שרוצים לעשות טוב וחסד בעולם. אז הגעתם בדיוק למקום הנכון.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 pt-2 fade-4">
-              <a href={DONATION_URL} target="_blank" rel="noopener noreferrer" className="btn-primary-gradient inline-flex items-center justify-center gap-2 px-10 py-4 text-lg">
+              <a href={donationUrl} target="_blank" rel="noopener noreferrer" className="btn-primary-gradient inline-flex items-center justify-center gap-2 px-10 py-4 text-lg">
                 לתרומה עכשיו
                 <span className="material-symbols-outlined text-lg" aria-hidden="true" style={{fontVariationSettings: "'FILL' 1"}}>favorite</span>
               </a>
@@ -117,7 +122,7 @@ export default function HomePage() {
                 עמותת "נותנים מהנשמה" עוזרת בכל יום לעשרות משפחות וילדים בקנייה של אוכל עד הבית.
               </p>
               <div className="flex flex-wrap gap-3 md:gap-4">
-                <a href={DONATION_URL} target="_blank" rel="noopener noreferrer" className="btn-primary-gradient px-8 md:px-10 py-3.5 md:py-4 text-base md:text-lg">לתרומה עכשיו</a>
+                <a href={donationUrl} target="_blank" rel="noopener noreferrer" className="btn-primary-gradient px-8 md:px-10 py-3.5 md:py-4 text-base md:text-lg">לתרומה עכשיו</a>
                 <a href="#video" className="btn-ghost bg-surface-container-highest/50 md:backdrop-blur-sm px-6 md:px-8 py-3.5 md:py-4 text-base md:text-lg flex items-center gap-2">
                   <span className="material-symbols-outlined" aria-hidden="true">play_circle</span>
                   צפו בסרטון
@@ -204,14 +209,14 @@ export default function HomePage() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { icon: 'family_restroom', color: 'secondary', bg: 'bg-secondary/8', title: 'משפחות נזקקות', desc: 'משפחות שמתמודדות עם קשיים כלכליים ומנסות לשמור על שגרה בכבוד.' },
-                { icon: 'person_2',        color: 'tertiary',  bg: 'bg-tertiary/8',  title: 'אמהות חד-הוריות', desc: 'נשים לוחמות שמגדלות את ילדיהן לבד וזקוקות לעזרה.' },
-                { icon: 'child_care',      color: 'primary',   bg: 'bg-primary/8',   title: 'ילדים', desc: 'ילדים שגדלים בבתים עם אי-ביטחון תזונתי ומגיעים אלינו ליום טוב יותר.' },
-                { icon: 'elderly',         color: 'secondary', bg: 'bg-secondary-container/30', title: 'קשישים ואלמנות', desc: 'אנשים שנותרו לבדם וזקוקים לביטחון תזונתי ולחברה חמה.' },
+                { icon: 'family_restroom', color: 'text-secondary', bg: 'bg-secondary/8', title: 'משפחות נזקקות', desc: 'משפחות שמתמודדות עם קשיים כלכליים ומנסות לשמור על שגרה בכבוד.' },
+                { icon: 'person_2',        color: 'text-tertiary',  bg: 'bg-tertiary/8',  title: 'אמהות חד-הוריות', desc: 'נשים לוחמות שמגדלות את ילדיהן לבד וזקוקות לעזרה.' },
+                { icon: 'child_care',      color: 'text-primary',   bg: 'bg-primary/8',   title: 'ילדים', desc: 'ילדים שגדלים בבתים עם אי-ביטחון תזונתי ומגיעים אלינו ליום טוב יותר.' },
+                { icon: 'elderly',         color: 'text-secondary', bg: 'bg-secondary-container/30', title: 'קשישים ואלמנות', desc: 'אנשים שנותרו לבדם וזקוקים לביטחון תזונתי ולחברה חמה.' },
               ].map(({ icon, color, bg, title, desc }) => (
                 <div key={title} className="group bg-surface-container-lowest p-8 rounded-3xl space-y-5 text-right border border-outline-variant/5 hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
                   <div className={`w-14 h-14 ${bg} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                    <span className={`material-symbols-outlined text-${color} text-3xl`} aria-hidden="true">{icon}</span>
+                    <span className={`material-symbols-outlined ${color} text-3xl`} aria-hidden="true">{icon}</span>
                   </div>
                   <h3 className="text-xl font-bold text-on-surface">{title}</h3>
                   <p className="text-on-surface-variant text-sm leading-relaxed">{desc}</p>
@@ -245,7 +250,7 @@ export default function HomePage() {
               ))}
             </div>
             <div className="text-center mt-16">
-              <a href={DONATION_URL} target="_blank" rel="noopener noreferrer" className="btn-tertiary-gradient inline-flex items-center gap-3 px-14 py-5 text-xl font-black">
+              <a href={donationUrl} target="_blank" rel="noopener noreferrer" className="btn-tertiary-gradient inline-flex items-center gap-3 px-14 py-5 text-xl font-black">
                 לתרומה עכשיו
                 <span className="material-symbols-outlined" aria-hidden="true" style={{fontVariationSettings: "'FILL' 1"}}>open_in_new</span>
               </a>
@@ -261,15 +266,19 @@ export default function HomePage() {
                 העשייה שלנו<br /><span className="text-primary">בשטח</span>
               </h2>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="relative rounded-3xl overflow-hidden img-brand asymmetric-card-right shadow-xl">
-                <img alt="מאות מתנדבים של עמותת נותנים מהנשמה" loading="lazy" decoding="async" className="w-full object-cover object-top hover:scale-[1.03] transition-transform duration-700" style={{height: '420px'}} src="/attachments/4c114341-9fbf-4410-973b-109c43d55c51.jpeg" />
+            <div className="grid md:grid-cols-5 gap-6 items-stretch">
+              <div className="md:col-span-3 relative rounded-3xl overflow-hidden img-brand asymmetric-card-right shadow-xl">
+                <img alt="מאות מתנדבים של עמותת נותנים מהנשמה" loading="lazy" decoding="async" className="w-full h-full object-cover object-top hover:scale-[1.03] transition-transform duration-700" style={{minHeight: '420px'}} src="/attachments/4c114341-9fbf-4410-973b-109c43d55c51.jpeg" />
                 <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-on-surface/50 to-transparent p-8">
                   <p className="text-white font-bold text-lg text-right font-headline">מתנדבי נותנים מהנשמה — לא משאירים ילד רעב</p>
                 </div>
               </div>
-              <div className="relative rounded-3xl overflow-hidden img-brand shadow-xl hidden md:block">
-                <img alt="פעילות התנדבות של נותנים מהנשמה" loading="lazy" decoding="async" className="w-full object-cover object-center hover:scale-[1.03] transition-transform duration-700" style={{height: '420px'}} src="/attachments/37b770e2-0c93-455e-aad1-3e6b7319997d.jpeg" />
+              <div className="md:col-span-2 quote-card bg-surface-container-lowest rounded-3xl shadow-xl p-9 flex flex-col justify-center gap-6 text-right">
+                <span className="material-symbols-outlined text-tertiary text-4xl" aria-hidden="true" style={{fontVariationSettings: "'FILL' 1"}}>volunteer_activism</span>
+                <blockquote className="text-xl font-headline font-bold text-on-surface leading-relaxed">
+                  "זה לא רק האוכל, זה הידיעה שמישהו חשב עלינו."
+                </blockquote>
+                <p className="text-on-surface-variant leading-relaxed">כל תמונה כאן היא בית אחד שלא נשאר לבד. תודה שאתם חלק מזה.</p>
               </div>
             </div>
           </div>
@@ -286,7 +295,7 @@ export default function HomePage() {
                 <p className="text-lg text-inverse-on-surface leading-relaxed">
                   עמותת "נותנים מהנשמה" הוקמה מתוך שליחות אחת: לוודא שאף ילד בישראל לא יישאר רעב. אנחנו פועלים עם רשת של מתנדבים הפרוסים בכל הארץ, ומגיעים ישירות לבתי המשפחות עם אוכל וכבוד. השקיפות היא נר לרגלנו — כל שקל שמגיע אלינו מתורגם ישירות למזון ולסיוע בשטח. אנחנו מזמינים אתכם להיות חלק מהמשפחה שלנו.
                 </p>
-                <a href={DONATION_URL} target="_blank" rel="noopener noreferrer" className="btn-primary-gradient inline-flex items-center gap-2 px-8 py-3.5 text-sm">
+                <a href={donationUrl} target="_blank" rel="noopener noreferrer" className="btn-primary-gradient inline-flex items-center gap-2 px-8 py-3.5 text-sm">
                   לתרומה עכשיו
                   <span className="material-symbols-outlined text-sm" aria-hidden="true">open_in_new</span>
                 </a>
@@ -301,7 +310,7 @@ export default function HomePage() {
                     </li>
                   ))}
                 </ul>
-                <a href={DONATION_URL} target="_blank" rel="noopener noreferrer" className="btn-primary-gradient inline-flex items-center gap-2 px-8 py-3.5 text-sm">
+                <a href={donationUrl} target="_blank" rel="noopener noreferrer" className="btn-primary-gradient inline-flex items-center gap-2 px-8 py-3.5 text-sm">
                   לתרומה עכשיו
                   <span className="material-symbols-outlined text-sm" aria-hidden="true">open_in_new</span>
                 </a>
@@ -351,9 +360,9 @@ export default function HomePage() {
               כל תרומה היא עולם ומלואו עבורם. אשריכם ותודה שאתם פותחים את הלב.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-5">
-              <a href={DONATION_URL} target="_blank" rel="noopener noreferrer" className="btn-tertiary-gradient px-14 py-5 text-xl font-black">לתרומה עכשיו</a>
+              <a href={donationUrl} target="_blank" rel="noopener noreferrer" className="btn-tertiary-gradient px-14 py-5 text-xl font-black">לתרומה עכשיו</a>
               <a href={WHATSAPP_CONTACT} target="_blank" rel="noopener noreferrer" className="text-inverse-on-surface px-10 py-5 rounded-full text-lg font-bold hover:bg-white/10 transition-colors" style={{border: '1.5px solid rgba(255,255,255,0.25)'}}>ליצירת קשר עם המוקד</a>
-              <a href={WHATSAPP_SHARE_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-8 py-5 rounded-full text-base font-bold hover:bg-[#1ebe5d] transition-colors" aria-label="שתפו בוואטסאפ">
+              <a href={whatsappShareUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-8 py-5 rounded-full text-base font-bold hover:bg-[#1ebe5d] transition-colors" aria-label="שתפו בוואטסאפ">
                 {WA_SVG_LG}
                 שתפו עם חברים
               </a>

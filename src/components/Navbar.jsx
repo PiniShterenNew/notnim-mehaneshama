@@ -1,9 +1,11 @@
+'use client'
+
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { DONATION_URL } from '../config'
+import { useFundraiser } from '../context/FundraiserContext'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const { donationUrl } = useFundraiser()
 
   return (
     <header>
@@ -17,7 +19,7 @@ export default function Navbar() {
             <a className="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors" href="/#stories">הסיפור שלנו</a>
             <a className="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors" href="/#about">אודות</a>
             <a className="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors" href="/#faq">שאלות נפוצות</a>
-            <a href={DONATION_URL} target="_blank" rel="noopener noreferrer" className="btn-primary-gradient px-7 py-2.5 text-sm">לתרומה עכשיו</a>
+            <a href={donationUrl} target="_blank" rel="noopener noreferrer" className="btn-primary-gradient px-7 py-2.5 text-sm">לתרומה עכשיו</a>
           </div>
 
           <button
@@ -35,7 +37,7 @@ export default function Navbar() {
             <a className="block text-on-surface-variant hover:text-primary py-2 font-semibold" href="/#stories" role="menuitem" onClick={() => setOpen(false)}>הסיפור שלנו</a>
             <a className="block text-on-surface-variant hover:text-primary py-2 font-semibold" href="/#about" role="menuitem" onClick={() => setOpen(false)}>אודות</a>
             <a className="block text-on-surface-variant hover:text-primary py-2 font-semibold" href="/#faq" role="menuitem" onClick={() => setOpen(false)}>שאלות נפוצות</a>
-            <a href={DONATION_URL} target="_blank" rel="noopener noreferrer" className="block text-center btn-primary-gradient px-6 py-3" role="menuitem" onClick={() => setOpen(false)}>לתרומה עכשיו</a>
+            <a href={donationUrl} target="_blank" rel="noopener noreferrer" className="block text-center btn-primary-gradient px-6 py-3" role="menuitem" onClick={() => setOpen(false)}>לתרומה עכשיו</a>
           </div>
         )}
       </nav>

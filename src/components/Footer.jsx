@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { WHATSAPP_CONTACT } from '../config'
 
 const WA_SVG = (
@@ -39,10 +39,10 @@ export default function Footer() {
 
           <nav aria-label="קישורים בכותרת תחתונה">
             <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
-              <Link className="text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" to="/terms">תנאי שימוש</Link>
-              <Link className="text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" to="/privacy">מדיניות פרטיות</Link>
-              <Link className="text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" to="/accessibility">הצהרת נגישות</Link>
-              <Link className="text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" to="/contact">צור קשר</Link>
+              <Link className="text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="/terms">תנאי שימוש</Link>
+              <Link className="text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="/privacy">מדיניות פרטיות</Link>
+              <Link className="text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="/accessibility">הצהרת נגישות</Link>
+              <Link className="text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="/contact">צור קשר</Link>
             </div>
           </nav>
 

@@ -1,6 +1,10 @@
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
-import { Link } from 'react-router-dom'
+import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
+import Link from 'next/link'
+
+export const metadata = {
+  title: 'מדיניות פרטיות — נותנים מהנשמה',
+}
 
 export default function PrivacyPage() {
   return (
@@ -29,11 +33,11 @@ export default function PrivacyPage() {
           </section>
           <section>
             <h2 className="text-xl font-headline font-bold text-on-surface mb-3">5. זכויותיכם</h2>
-            <p>בהתאם לחוק הגנת הפרטיות, התשמ"א-1981, הנכם רשאים לבקש לעיין במידע האישי שנאסף עליכם, לתקנו או למחקו. לצורך כך, אנא פנו אלינו דרך <Link to="/contact" className="text-primary font-bold hover:underline">דף יצירת הקשר</Link>.</p>
+            <p>בהתאם לחוק הגנת הפרטיות, התשמ"א-1981, הנכם רשאים לבקש לעיין במידע האישי שנאסף עליכם, לתקנו או למחקו. לצורך כך, אנא פנו אלינו דרך <Link href="/contact" className="text-primary font-bold hover:underline">דף יצירת הקשר</Link>.</p>
           </section>
           <section>
             <h2 className="text-xl font-headline font-bold text-on-surface mb-3">6. יצירת קשר</h2>
-            <p>לשאלות בנוגע למדיניות הפרטיות ניתן לפנות אלינו דרך <Link to="/contact" className="text-primary font-bold hover:underline">דף יצירת הקשר</Link>.</p>
+            <p>לשאלות בנוגע למדיניות הפרטיות ניתן לפנות אלינו דרך <Link href="/contact" className="text-primary font-bold hover:underline">דף יצירת הקשר</Link>.</p>
           </section>
         </div>
       </main>
