@@ -1,6 +1,10 @@
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
-import { Link } from 'react-router-dom'
+import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
+import Link from 'next/link'
+
+export const metadata = {
+  title: 'הצהרת נגישות — נותנים מהנשמה',
+}
 
 export default function AccessibilityPage() {
   return (
@@ -29,7 +33,7 @@ export default function AccessibilityPage() {
           </section>
           <section>
             <h2 className="text-xl font-headline font-bold text-on-surface mb-3">פניות בנושא נגישות</h2>
-            <p>אם נתקלתם בבעיית נגישות באתר, נשמח לשמוע ולטפל בכך. ניתן לפנות אלינו דרך <Link to="/contact" className="text-primary font-bold hover:underline">דף יצירת הקשר</Link>.</p>
+            <p>אם נתקלתם בבעיית נגישות באתר, נשמח לשמוע ולטפל בכך. ניתן לפנות אלינו דרך <Link href="/contact" className="text-primary font-bold hover:underline">דף יצירת הקשר</Link>.</p>
           </section>
         </div>
       </main>

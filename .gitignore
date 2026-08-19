@@ -5,6 +5,7 @@ node_modules/
 dist/
 dist-ssr/
 .vite/
+.next/
 coverage/
 
 # Logs
@@ -29,3 +30,6 @@ Thumbs.db
 
 # Local tooling state
 .claude/settings.local.json
+
+# 
+secrets/
