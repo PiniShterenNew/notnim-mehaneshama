@@ -1,5 +1,5 @@
 // Server-only module. Never import this from client (src/) code —
-// it reads the service-account private key file from disk.
+// it handles the service-account private key (from env vars or a local file).
 import fs from 'node:fs'
 import path from 'node:path'
 import { google } from 'googleapis'
@@ -10,7 +10,8 @@ export class GoogleSheetsApiError extends Error {}
 function loadConfig(env) {
   const sheetId = env.GOOGLE_SHEET_ID
   const sheetName = env.GOOGLE_SHEET_NAME
-  const inlineJson = env.GOOGLE_SERVICE_ACCOUNT_JSON
+  const clientEmail = env.GOOGLE_CLIENT_EMAIL
+  const privateKeyRaw = env.GOOGLE_PRIVATE_KEY
   const keyFileRelative = env.GOOGLE_SERVICE_ACCOUNT_FILE
 
   if (!sheetId) {
@@ -19,21 +20,25 @@ function loadConfig(env) {
   if (!sheetName) {
     throw new GoogleSheetsConfigError('GOOGLE_SHEET_NAME חסר — הגדירו אותו במשתני הסביבה')
   }
-  if (!inlineJson && !keyFileRelative) {
-    throw new GoogleSheetsConfigError('חסרים credentials — הגדירו GOOGLE_SERVICE_ACCOUNT_JSON (מומלץ ב-Vercel) או GOOGLE_SERVICE_ACCOUNT_FILE (לפיתוח מקומי)')
+  if (!clientEmail && !keyFileRelative) {
+    throw new GoogleSheetsConfigError('חסרים credentials — הגדירו GOOGLE_CLIENT_EMAIL + GOOGLE_PRIVATE_KEY (מומלץ ב-Vercel) או GOOGLE_SERVICE_ACCOUNT_FILE (לפיתוח מקומי)')
   }
 
-  // GOOGLE_SERVICE_ACCOUNT_JSON (the full key file's contents, as an env var) takes
-  // priority — Vercel/serverless hosts have no writable/committed secrets/ folder,
-  // so the file-path option is for local dev only.
-  if (inlineJson) {
-    let credentials
-    try {
-      credentials = JSON.parse(inlineJson)
-    } catch {
-      throw new GoogleSheetsConfigError('GOOGLE_SERVICE_ACCOUNT_JSON אינו JSON תקין')
+  // GOOGLE_CLIENT_EMAIL + GOOGLE_PRIVATE_KEY (separate env vars) take priority —
+  // Vercel/serverless hosts have no writable/committed secrets/ folder, so the
+  // file-path option is for local dev only.
+  if (clientEmail) {
+    if (!privateKeyRaw) {
+      throw new GoogleSheetsConfigError('GOOGLE_PRIVATE_KEY חסר — הגדירו אותו לצד GOOGLE_CLIENT_EMAIL')
     }
-    return { sheetId, sheetName, credentials, cacheKey: credentials.client_email || 'inline-json' }
+    // Env vars store the key's newlines escaped as literal "\n" — restore them.
+    const privateKey = privateKeyRaw.replace(/\\n/g, '\n')
+    return {
+      sheetId,
+      sheetName,
+      credentials: { client_email: clientEmail, private_key: privateKey },
+      cacheKey: clientEmail,
+    }
   }
 
   const keyFilePath = path.resolve(process.cwd(), keyFileRelative)

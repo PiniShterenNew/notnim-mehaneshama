@@ -1,14 +1,13 @@
 import './globals.css'
 import Providers from './providers'
+import { getSiteUrl } from '../lib/siteUrl'
 
 const SITE_TITLE = 'נותנים מהנשמה — לא משאירים ילד רעב'
 const SITE_DESCRIPTION = 'עמותת נותנים מהנשמה עוזרת בכל יום לעשרות משפחות וילדים בקנייה של אוכל עד הבית. תרמו ועזרו לנו לדאוג שאף ילד לא יישאר רעב.'
 const SOCIAL_IMAGE = '/attachments/4c114341-9fbf-4410-973b-109c43d55c51.jpeg'
 
-// TODO before production launch: set NEXT_PUBLIC_SITE_URL to the real domain
-// so shared links (WhatsApp/Facebook previews) resolve absolute image URLs correctly.
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(getSiteUrl()),
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
   icons: { icon: '/attachments/fevo.icon.png' },
