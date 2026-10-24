@@ -56,6 +56,10 @@ export default function Footer() {
               {' · '}
               <a href="tel:0548345192" className="hover:text-inverse-on-surface transition-colors">054-834-5192</a>
             </div>
+            <div className="text-inverse-on-surface/50 text-xs mt-2">
+              אתר נבנה ע״י{' '}
+              <a href="https://northsparkstudio.com/he" target="_blank" rel="nofollow noopener noreferrer" className="hover:text-inverse-on-surface transition-colors">NorthSpark Studio</a>
+            </div>
           </div>
 
         </div>
