@@ -10,6 +10,8 @@ export const metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
+  alternates: { canonical: '/' },
+  robots: { index: true, follow: true },
   icons: { icon: '/attachments/fevo.icon.png' },
   openGraph: {
     type: 'website',
